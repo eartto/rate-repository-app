@@ -3,6 +3,8 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import Text from './Text';
 import theme from '../theme';
+import useSignIn from '../hooks/useSignIn';
+import { useNavigate } from 'react-router-native';
 
 const styles = StyleSheet.create({
     textField: {
@@ -82,9 +84,19 @@ const SignInForm = ({ onSubmit }) => {
 }
 
 const SignIn = () => {
-    const onSubmit = (values) => {
-        console.log(values);
-    };
+    const [signIn] = useSignIn();
+    const navigate = useNavigate()
+
+    const onSubmit = async (values) => {
+        const { username, password } = values;
+
+        try {
+            const { data } = await signIn({ username, password });
+        } catch (e) {
+            console.log(e);
+        }
+        navigate(-1)
+    }
 
     return <SignInForm onSubmit={onSubmit} />
 

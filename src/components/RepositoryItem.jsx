@@ -1,6 +1,7 @@
-import { View, Image, StyleSheet } from 'react-native';
+import { View, Image, StyleSheet, Pressable } from 'react-native';
 import theme from '../theme';
 import Text from './Text';
+import { useNavigate } from 'react-router-native';
 
 const styles = StyleSheet.create({
     fullName: {
@@ -49,39 +50,43 @@ const NumbersDisplay = (props) => {
 }
 
 const RepositoryItem = (props) => {
+    const navigate = useNavigate()
+
     return (
-        <View style={{ backgroundColor: 'white' }}>
-            <View style={styles.flexContainer}>
-                <Image
-                    style={styles.tinyLogo}
-                    source={{
-                        uri: props.item.ownerAvatarUrl
-                    }} />
-                <Text style={{
-                    fontWeight: theme.fontWeights.bold, fontSize: 20
+        <View testID="repositoryItem" style={{ backgroundColor: 'white' }}>
+            <Pressable onPress={() => navigate('/:id')}>
+                <View style={styles.flexContainer}>
+                    <Image
+                        style={styles.tinyLogo}
+                        source={{
+                            uri: props.item.ownerAvatarUrl
+                        }} />
+                    <Text style={{
+                        fontWeight: theme.fontWeights.bold, fontSize: 20
+                    }}>
+                        {props.item.fullName}
+                    </Text>
+                </View>
+                <Text color="textSecondary" style={{ padding: 3 }}>
+                    {props.item.description}
+                </Text>
+                <View style={{
+                    backgroundColor: theme.colors.primary,
+                    padding: 5,
+                    alignSelf: 'flex-start',
+                    borderRadius: 2,
                 }}>
-                    {props.item.fullName}
-                </Text>
-            </View>
-            <Text color="textSecondary" style={{ padding: 3 }}>
-                {props.item.description}
-            </Text>
-            <View style={{
-                backgroundColor: theme.colors.primary,
-                padding: 5,
-                alignSelf: 'flex-start',
-                borderRadius: 2,
-            }}>
-                <Text style={{ color: theme.colors.white }}>
-                    {props.item.language}
-                </Text>
-            </View>
-            <View style={styles.flexContainer}>
-                <NumbersDisplay number={props.item.stargazersCount} string={'Stars'} />
-                <NumbersDisplay number={props.item.forksCount} string={'Forks'} />
-                <NumbersDisplay number={props.item.reviewCount} string={'Reviews'} />
-                <NumbersDisplay number={props.item.ratingAverage} string={'Raiting'} />
-            </View>
+                    <Text style={{ color: theme.colors.white }}>
+                        {props.item.language}
+                    </Text>
+                </View>
+                <View style={styles.flexContainer}>
+                    <NumbersDisplay number={props.item.stargazersCount} string={'Stars'} />
+                    <NumbersDisplay number={props.item.forksCount} string={'Forks'} />
+                    <NumbersDisplay number={props.item.reviewCount} string={'Reviews'} />
+                    <NumbersDisplay number={props.item.ratingAverage} string={'Raiting'} />
+                </View>
+            </Pressable>
         </View>
     )
 }

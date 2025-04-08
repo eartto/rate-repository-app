@@ -27,13 +27,27 @@ const AppBar = () => {
   const apolloClient = useApolloClient()
   const authStorage = new AuthStorage()
 
+  console.log(loading)
 
   const signOut = async () => {
     await authStorage.removeAccessToken()
     apolloClient.clearStore()
   }
   if (loading) {
-    return null
+    return <View style={styles.flexContainer}>{/* ... */}
+      <ScrollView horizontal >{/* ... */}
+        <Link to="/">
+          <Text style={styles.text}>
+            Repositories
+          </Text>
+        </Link>
+        <Link to="/signin">
+          <Text style={styles.text}>
+            Sign in
+          </Text>
+        </Link>
+      </ScrollView>
+    </View>;
   }
 
   if (data.me !== null) {

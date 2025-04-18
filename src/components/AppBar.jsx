@@ -27,35 +27,32 @@ const AppBar = () => {
   const apolloClient = useApolloClient()
   const authStorage = new AuthStorage()
 
-  console.log(loading)
 
   const signOut = async () => {
     await authStorage.removeAccessToken()
     apolloClient.clearStore()
   }
   if (loading) {
-    return <View style={styles.flexContainer}>{/* ... */}
-      <ScrollView horizontal >{/* ... */}
-        <Link to="/">
-          <Text style={styles.text}>
-            Repositories
-          </Text>
-        </Link>
-        <Link to="/signin">
-          <Text style={styles.text}>
-            Sign in
-          </Text>
-        </Link>
-      </ScrollView>
-    </View>;
+    return null
   }
 
+  // User logged in
   if (data.me !== null) {
     return <View style={styles.flexContainer}>{/* ... */}
       <ScrollView horizontal >{/* ... */}
         <Link to="/">
           <Text style={styles.text}>
             Repositories
+          </Text>
+        </Link>
+        <Link to="/createreview">
+          <Text style={styles.text}>
+            Create a review
+          </Text>
+        </Link>
+        <Link to="/userreviews">
+          <Text style={styles.text}>
+            My reviews
           </Text>
         </Link>
         <Pressable onPress={() => signOut()}>
@@ -66,6 +63,8 @@ const AppBar = () => {
       </ScrollView>
     </View>;
   }
+
+  // No user logged in
   else {
     return <View style={styles.flexContainer}>{/* ... */}
       <ScrollView horizontal >{/* ... */}
@@ -77,6 +76,11 @@ const AppBar = () => {
         <Link to="/signin">
           <Text style={styles.text}>
             Sign in
+          </Text>
+        </Link>
+        <Link to="/signup">
+          <Text style={styles.text}>
+            Sign up
           </Text>
         </Link>
       </ScrollView>

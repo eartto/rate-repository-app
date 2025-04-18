@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
         padding: 5,
         width: 50,
         height: 50,
+        borderRadius: 4,
     },
 });
 
@@ -54,7 +55,7 @@ const RepositoryItem = (props) => {
 
     return (
         <View testID="repositoryItem" style={{ backgroundColor: 'white' }}>
-            <Pressable onPress={() => navigate('/:id')}>
+            <Pressable onPress={() => navigate(`/repository/${props.item.id}`)}>
                 <View style={styles.flexContainer}>
                     <Image
                         style={styles.tinyLogo}
